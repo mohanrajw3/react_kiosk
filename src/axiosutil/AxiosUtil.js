@@ -1,15 +1,18 @@
 import axios from "axios";
 
+export default {
+    POST: function (url, data) {
 
-export const postData = (url, data) => {
-    axios.post(url, data).then(function (response) {
+        return new Promise((resolve, reject) => {
+            axios.post(url, data).then(function (response) {
+                    return resolve(response);
+                }, reason => function (response) {
+                    return reject(response);
+                }
+            )
+        })
 
-            if (response.data.code === "200") return response;
-
-        }, reason => function (response) {
-            return response;
-        }
-    )
+    }
 }
 
 

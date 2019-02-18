@@ -3,10 +3,8 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import AppBar from 'material-ui/AppBar';
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
-import {axios,postData} from '../axiosutil/AxiosUtil';
 import {LOGIN_API} from "../constants/AppConstants";
-
-
+import axiosUtil from '../axiosutil/AxiosUtil';
 
 
 const style = {
@@ -23,7 +21,8 @@ export class Login extends React.Component {
             channel: 'W'
         }
     }
-    componentDidMount () {
+
+    componentDidMount() {
 
     }
 
@@ -36,9 +35,9 @@ export class Login extends React.Component {
             channel: "W"
         };
 
-         postData(LOGIN_API, userDetails).then(value => {
+        return axiosUtil.POST(LOGIN_API, userDetails).then(value => {
             console.log(value)
-        })  ;
+        });
 
 
     }
