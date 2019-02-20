@@ -5,13 +5,20 @@ import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
 import {LOGIN_API} from "../constants/AppConstants";
 import axiosUtil from '../axiosutil/AxiosUtil';
+import {fakeauth} from '../auth/Auth-Process-Filter';
+import {Redirect} from "react-router";
 
 
 const style = {
     margin: 15,
 };
 
+const postLogin = localStorage.getItem("postLogin");
+
+
 export class Login extends React.Component {
+
+
 
     constructor(props) {
         super(props);
@@ -37,6 +44,10 @@ export class Login extends React.Component {
 
         return axiosUtil.POST(LOGIN_API, userDetails).then(value => {
             console.log(value)
+            fakeauth.authenticate(() => {
+                localStorage.setItem("postLogin","true");
+                this.setState({redirectToReferrer: true});
+            });
         });
 
 
@@ -44,32 +55,41 @@ export class Login extends React.Component {
 
 
     render() {
-        return (
-            <div>
-                <MuiThemeProvider>
-                    <div>
-                        <AppBar
-                            title="Login"
-                        />
-                        <TextField
-                            hintText="Enter your email"
-                            floatingLabelText="email"
-                            onChange={(event, newValue) => this.setState({emailId: newValue})}
-                        />
-                        <br/>
-                        <TextField
-                            type="password"
-                            hintText="Enter your Password"
-                            floatingLabelText="Password"
-                            onChange={(event, newValue) => this.setState({password: newValue})}
-                        />
-                        <br/>
-                        <RaisedButton label="Submit" primary={true} style={style}
-                                      onClick={(event) => this.handleClick(event)}/>
-                    </div>
-                </MuiThemeProvider>
-            </div>
-        );
+
+
+        const { from } = this.props.location.state || { from: { pathname: "/Login" } };
+
+
+        if (postLogin) {
+            return <Redirect to={'/Home'}/>;
+        }else {
+            return (
+                <div>
+                    <MuiThemeProvider>
+                        <div>
+                            <AppBar
+                                title="Login"
+                            />
+                            <TextField
+                                hintText="Enter your email"
+                                floatingLabelText="email"
+                                onChange={(event, newValue) => this.setState({emailId: newValue})}
+                            />
+                            <br/>
+                            <TextField
+                                type="password"
+                                hintText="Enter your Password"
+                                floatingLabelText="Password"
+                                onChange={(event, newValue) => this.setState({password: newValue})}
+                            />
+                            <br/>
+                            <RaisedButton label="Submit" primary={true} style={style}
+                                          onClick={(event) => this.handleClick(event)}/>
+                        </div>
+                    </MuiThemeProvider>
+                </div>
+            );
+        }
     }
 
 

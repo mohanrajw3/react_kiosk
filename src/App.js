@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
 import './App.css';
 import {Login} from "./login/Login";
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Route, Link,Redirect } from "react-router-dom";
 import {Home} from "./home/Home";
-import {Redirect} from "react-router";
+import PrivateRoute from "./auth/PrivateRoute";
 
 
 class App extends Component {
@@ -18,38 +18,6 @@ class App extends Component {
         );
     }
 }
-
-
-const PrivateRoute = ({ component: Component, ...rest }) => (
-    <Route
-        {...rest}
-        render={props =>
-            fakeAuth.isAuthenticated ? (
-                <Home />
-            ) : (
-                <Redirect
-                    to={{
-                        pathname: "/login",
-                        state: { from: props.location }
-                    }}
-                />
-            )
-        }
-    />
-);
-
-
-const fakeAuth = {
-    isAuthenticated: false,
-    authenticate(cb) {
-        this.isAuthenticated = true;
-        setTimeout(cb, 100); // fake async
-    },
-    signout(cb) {
-        this.isAuthenticated = false;
-        setTimeout(cb, 100);
-    }
-};
 
 
 export default App;
