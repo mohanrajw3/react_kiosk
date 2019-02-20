@@ -9,10 +9,12 @@
     "react": "^16.8.2",
     "react-content-loader": "^4.0.1",
     "react-dom": "^16.8.2",
+    "react-moment": "^0.8.4",
     "react-router": "^4.3.1",
     "react-scripts": "2.1.5",
     "react-shimmer": "^1.2.1",
-    "react-tap-event-plugin": "^3.0.3"
+    "react-tap-event-plugin": "^3.0.3",
+    "moment": "^2.14.1"
   },
   "scripts": {
     "start": "react-scripts start",

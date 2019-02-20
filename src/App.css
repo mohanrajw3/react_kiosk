@@ -46,3 +46,80 @@
   width: 100%;
   height: 100%;
 }
+
+.schoolNameTitle{
+  text-align: right;
+  font-size:85%;
+}
+
+.schoolCard{
+  position: relative;
+  top: 35px;
+  width: 85%;
+  left: 7.5%;
+}
+
+.schoolLogo{
+  background-position: center!important;
+  background-size: 30% 100%!important;
+  padding: 12%;
+}
+
+.currentTime{
+  font-size: 85%;
+}
+
+
+.btnWrapper{
+  text-align: center;
+  position: relative;
+  top: 8rem;
+}
+
+.studentCheckInBtn{
+
+}
+
+.teacherDp{
+  float: left;
+  background-size: 70% 100%!important;
+  background-position: center!important;
+  padding: 2rem;
+}
+
+.teacherWrapper{
+  position: relative;
+}
+
+.teacherCard{
+  position: relative;
+  top: 1rem;
+}
+
+.teacherName{
+  width: max-content!important;
+  position: absolute!important;
+  right: 50%;
+  top: 1.25rem;
+  font-size: 1rem!important;
+}
+
+.checkInWrapper{
+  position: relative;
+  float: right;
+  bottom: 1rem;
+  width: 40%;
+}
+
+
+.teacherCheckin{
+  height: 2rem;
+  width: 8rem;
+  right: 0.2rem;
+}
+
+.ckinTxt{
+  font-size: 1rem;
+  position: relative;
+  bottom: 1.25rem;
+}

@@ -83,8 +83,10 @@ export class Login extends React.Component {
                                 onChange={(event, newValue) => this.setState({password: newValue})}
                             />
                             <br/>
+
                             <RaisedButton label="Submit" primary={true} style={style}
                                           onClick={(event) => this.handleClick(event)}/>
+
                         </div>
                     </MuiThemeProvider>
                 </div>
