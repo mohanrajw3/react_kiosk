@@ -7,6 +7,7 @@
     "material-ui": "^0.20.2",
     "react": "^16.8.2",
     "react-dom": "^16.8.2",
+    "react-router": "^4.3.1",
     "react-scripts": "2.1.5",
     "react-tap-event-plugin": "^3.0.3"
   },
@@ -24,5 +25,8 @@
     "not dead",
     "not ie <= 11",
     "not op_mini all"
-  ]
+  ],
+  "devDependencies": {
+    "react-router-dom": "^4.3.1"
+  }
 }
