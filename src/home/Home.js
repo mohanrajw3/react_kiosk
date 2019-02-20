@@ -1,13 +1,10 @@
 import React from "react";
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import AppBar from 'material-ui/AppBar';
-import {LOGIN_API} from "../constants/AppConstants";
-import axiosUtil from '../axiosutil/AxiosUtil';
+import Button from '@material-ui/core/Button';
+import {withStyles} from '@material-ui/core/styles';
+import {Link} from "react-router-dom";
 
-
-const style = {
-    margin: 15,
-};
 
 export class Home extends React.Component {
 
@@ -25,31 +22,24 @@ export class Home extends React.Component {
     }
 
 
-    handleClick(event) {
-
-        let userDetails = {
-            emailId: this.state.emailId,
-            password: this.state.password,
-            channel: "W"
-        };
-
-        return axiosUtil.POST(LOGIN_API, userDetails).then(value => {
-            console.log(value)
-        });
-
-
-    }
-
-
     render() {
+
+
         return (
             <div>
                 <MuiThemeProvider>
-                    <div>
-                        <AppBar
-                            title="App Homescreen"
-                        />
-                    </div>
+                    <React.Fragment>
+                        <div>
+                            <AppBar
+                                title="App Homescreen"
+                            />
+                        </div>
+
+                        <Button variant="contained" className="w-60" size="large" color="primary"> Teacher - Check in
+                            <Link className="linkRef" to="/teacher"/>
+                        </Button>
+                    </React.Fragment>
+
                 </MuiThemeProvider>
             </div>
         );
@@ -57,3 +47,5 @@ export class Home extends React.Component {
 
 
 }
+
+

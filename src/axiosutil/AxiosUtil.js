@@ -1,5 +1,7 @@
 import axios from "axios";
 
+const token = localStorage.getItem("token");
+
 export default {
     POST: function (url, data) {
 
@@ -12,6 +14,27 @@ export default {
             )
         })
 
+    },
+
+
+    GET : function (url) {
+
+        let config = {
+            headers: {
+                "X-Auth-Token": token,
+                "Content-Type": "application/json",
+                "X-Requested-With" : "XMLHttpRequest"
+            }
+        }
+
+        return new Promise((resolve, reject) => {
+            axios.get(url,config).then(function (response) {
+                    return resolve(response);
+                }, reason => function (response) {
+                    return reject(response);
+                }
+            )
+        })
     }
 }
 

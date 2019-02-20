@@ -43,9 +43,9 @@ export class Login extends React.Component {
         };
 
         return axiosUtil.POST(LOGIN_API, userDetails).then(value => {
-            console.log(value)
             fakeauth.authenticate(() => {
                 localStorage.setItem("postLogin","true");
+                localStorage.setItem("token",value.data.userToken.token)
                 this.setState({redirectToReferrer: true});
             });
         });
@@ -67,9 +67,9 @@ export class Login extends React.Component {
                 <div>
                     <MuiThemeProvider>
                         <div>
-                            <AppBar
-                                title="Login"
-                            />
+
+                        <AppBar title="App Homescreen"/>
+
                             <TextField
                                 hintText="Enter your email"
                                 floatingLabelText="email"
