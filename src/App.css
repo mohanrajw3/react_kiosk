@@ -114,8 +114,8 @@
 
 .teacherCheckin{
   height: 2rem;
-  width: 8rem;
   right: 0.2rem;
+  width: auto;
 }
 
 .ckinTxt{

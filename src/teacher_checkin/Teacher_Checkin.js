@@ -7,56 +7,96 @@ import CardMedia from "@material-ui/core/CardMedia";
 import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
 import ContentLoader, {Facebook} from "react-content-loader";
-import {TEACHER_API} from "../constants/AppConstants";
+import {TEACHER_API, TEACHER_CKIN, CODE_TEACHER_CKIN_SUCCESS} from "../constants/AppConstants";
 import axiosUtil from "../axiosutil/AxiosUtil";
 
 
-const MyLoader = () => <ContentLoader/>
+const MyLoader = () => <ContentLoader/>;
+const schoolid = localStorage.getItem("schoolid");
 
 export class Teacher_Checkin extends React.Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            "data": false
+            "data": false,
+            "statusChange": false,
+            'attendanceStatus': 'Check Out'
         }
+    }
+
+
+    onClickCheckIn(event, data) {
+        let reqBody = {
+            "channel": "W",
+            "phoneNo": data.phoneNo,
+            "emailId": data.emailId
+        };
+
+        let status = data.lastCheckoutTime ? "SCKOUT" : data.lastCheckinTime ? "SCKOUT" : "SCKIN";
+
+        console.log(event.target.valueOf);
+
+        axiosUtil.POST(TEACHER_CKIN + "/" + status + "/" + schoolid, reqBody).then(response => {
+            console.log(response);
+
+            if (response.data.mCode === "ATTENDANCE_ADD_SUCCESS") {
+                this.setState(attendanceStatus => {
+                        const teachers = attendanceStatus.teachers.map(userData => {
+                            return createStatus(userData, data)
+                        })
+
+                        return {teachers}
+                    }
+                )
+            }
+
+            function createStatus(userData, responseData) {
+                if (userData.emailId === responseData.emailId) {
+                    userData.attstatus = "CHECKEDAD";
+                    return userData;
+                } else {
+                    return userData;
+                }
+            }
+
+
+        });
     }
 
     componentWillMount() {
         axiosUtil.GET(TEACHER_API).then(response => {
-
             this.setState({
                 data: true,
-                teachers: response.data.teacherList
+                teachers: response.data.attendances
             })
 
         });
     }
 
-    componentDidMount() {
-
-
-    }
 
     renderTeachers() {
 
         return this.state.teachers.map(data =>
 
-            <div className={"teacherWrapper"}>
+            <div className={"teacherWrapper"} key={data.name}>
                 <Card className={"teacherCard"}>
-
                     <CardMedia className={"teacherDp"}
                                image={require("../assets/images/school.svg")}
                                title="Live from space album cover"
                     />
-                    <CardContentṅ>
+                    <CardContent>
                         <Typography className={"teacherName"} component="h5" variant="h5">
                             {data.name}
                         </Typography>
-                    </CardContentṅ>
+                    </CardContent>
                     <div className={"checkInWrapper"}>
-                        <Button className={"teacherCheckin"} variant="outlined" color="primary">
-                            <p className={"ckinTxt"}>Check In</p>
+                        <Button className={"teacherCheckin"} variant="outlined" color="primary"
+                                onClick={(e) => this.onClickCheckIn(e, data)}>
+                            <p className={'ckinTxt'}>
+                                {data.attstatus ? data.attstatus : data.lastCheckoutTime ? "Checked out" : data.lastCheckinTime ? "Check Out " : "CheckIn"}
+
+                            </p>
                         </Button>
                     </div>
 

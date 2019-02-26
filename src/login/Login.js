@@ -45,7 +45,8 @@ export class Login extends React.Component {
         return axiosUtil.POST(LOGIN_API, userDetails).then(value => {
             fakeauth.authenticate(() => {
                 localStorage.setItem("postLogin","true");
-                localStorage.setItem("token",value.data.userToken.token)
+                localStorage.setItem("token",value.data.userToken.token);
+                localStorage.setItem("schoolid",value.data.userToken.schoolIntId);
                 this.setState({redirectToReferrer: true});
             });
         });
