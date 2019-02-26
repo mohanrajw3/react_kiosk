@@ -33,9 +33,14 @@ export class Teacher_Checkin extends React.Component {
             "emailId": data.emailId
         };
 
-        let status = data.lastCheckoutTime ? "SCKOUT" : data.lastCheckinTime ? "SCKOUT" : "SCKIN";
+        let status;
 
-        console.log(event.target.valueOf);
+        if (data.attstatus && data.attstatus == "Check Out" || data.lastCheckinTime) {
+            status = "SCKOUT";
+        } else {
+            status = "SCKIN";
+        }
+
 
         axiosUtil.POST(TEACHER_CKIN + "/" + status + "/" + schoolid, reqBody).then(response => {
             console.log(response);
@@ -44,7 +49,7 @@ export class Teacher_Checkin extends React.Component {
                 this.setState(attendanceStatus => {
                         const teachers = attendanceStatus.teachers.map(userData => {
                             return createStatus(userData, data)
-                        })
+                        });
 
                         return {teachers}
                     }
@@ -52,14 +57,20 @@ export class Teacher_Checkin extends React.Component {
             }
 
             function createStatus(userData, responseData) {
+
+
                 if (userData.emailId === responseData.emailId) {
-                    userData.attstatus = "CHECKEDAD";
+                    if (status === "SCKOUT") {
+                        userData.attstatus = "Checked Out";
+                    } else {
+                        userData.attstatus = "Check Out";
+                    }
+
                     return userData;
                 } else {
                     return userData;
                 }
             }
-
 
         });
     }
