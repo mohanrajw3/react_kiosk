@@ -6,12 +6,11 @@ import Card from "@material-ui/core/Card";
 import CardMedia from "@material-ui/core/CardMedia";
 import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
-import ContentLoader, {Facebook} from "react-content-loader";
+import {Facebook} from "react-content-loader";
 import {TEACHER_API, TEACHER_CKIN, CODE_TEACHER_CKIN_SUCCESS} from "../constants/AppConstants";
 import axiosUtil from "../axiosutil/AxiosUtil";
 
 
-const MyLoader = () => <ContentLoader/>;
 const schoolid = localStorage.getItem("schoolid");
 
 export class Teacher_Checkin extends React.Component {
@@ -35,7 +34,7 @@ export class Teacher_Checkin extends React.Component {
 
         let status;
 
-        if (data.attstatus && data.attstatus == "Check Out" || data.lastCheckinTime) {
+        if (data.attstatus && data.attstatus === "Check Out" || data.lastCheckinTime) {
             status = "SCKOUT";
         } else {
             status = "SCKIN";
@@ -45,7 +44,7 @@ export class Teacher_Checkin extends React.Component {
         axiosUtil.POST(TEACHER_CKIN + "/" + status + "/" + schoolid, reqBody).then(response => {
             console.log(response);
 
-            if (response.data.mCode === "ATTENDANCE_ADD_SUCCESS") {
+            if (response.data.mCode === CODE_TEACHER_CKIN_SUCCESS) {
                 this.setState(attendanceStatus => {
                         const teachers = attendanceStatus.teachers.map(userData => {
                             return createStatus(userData, data)
@@ -57,8 +56,6 @@ export class Teacher_Checkin extends React.Component {
             }
 
             function createStatus(userData, responseData) {
-
-
                 if (userData.emailId === responseData.emailId) {
                     if (status === "SCKOUT") {
                         userData.attstatus = "Checked Out";
@@ -106,7 +103,6 @@ export class Teacher_Checkin extends React.Component {
                                 onClick={(e) => this.onClickCheckIn(e, data)}>
                             <p className={'ckinTxt'}>
                                 {data.attstatus ? data.attstatus : data.lastCheckoutTime ? "Checked out" : data.lastCheckinTime ? "Check Out " : "CheckIn"}
-
                             </p>
                         </Button>
                     </div>

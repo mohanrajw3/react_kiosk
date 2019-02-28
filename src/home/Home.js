@@ -41,7 +41,7 @@ export class Home extends React.Component {
                     <React.Fragment>
                         <div>
                             <AppBar
-                                title="Kiosk"
+                                title="Skooly Kiosk"
                             />
                         </div>
 
@@ -77,7 +77,7 @@ export class Home extends React.Component {
                             <br/>
                             <Button variant="outlined"  className={"studentCheckInBtn"} size="large" color="primary">
                                 Student - Check in
-                                <Link className="linkRef" to="/teacher"/>
+                                <Link className="linkRef" to="/student"/>
                             </Button>
                         </div>
                     </React.Fragment>
